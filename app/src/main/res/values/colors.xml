@@ -2,4 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="cancel">#DC143C</color>
+    <color name="checkOut">#228B22</color>
+    <color name="checkIn">#6A70FF</color>
 </resources>

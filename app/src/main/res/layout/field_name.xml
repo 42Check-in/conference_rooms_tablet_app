@@ -1,0 +1,21 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        style="@style/FieldNameStyle"
+        android:layout_weight="1"
+        android:text="Intra_id"/>
+
+    <TextView
+        style="@style/FieldNameStyle"
+        android:layout_weight="5"
+        android:text="Time"/>
+
+    <TextView
+        style="@style/FieldNameStyle"
+        android:layout_weight="1"
+        android:text="in / out"/>
+</LinearLayout>

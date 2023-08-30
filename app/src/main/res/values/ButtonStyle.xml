@@ -1,0 +1,24 @@
+<resources>
+    <style name="BaseButtonStyle">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="CheckInButton" parent="BaseButtonStyle">
+        <item name="android:backgroundTint">@color/checkIn</item>
+        <item name="android:text">Check-in</item>
+    </style>
+
+    <style name="CheckOutButton" parent="BaseButtonStyle">
+        <item name="android:backgroundTint">@color/checkOut</item>
+        <item name="android:text">Check-out</item>
+    </style>
+
+    <style name="CancelButton" parent="BaseButtonStyle">
+        <item name="android:backgroundTint">@color/cancel</item>
+        <item name="android:text">Cancel</item>
+    </style>
+</resources>
