@@ -15,9 +15,10 @@ public class Repository {
 
     public String requestReservationInfo() {
         final String reservations = "reservations";
+
         StringBuilder sb = new StringBuilder();
         try {
-            URL url = new URL(api42CheckIn + reservations);
+            URL url = new URL("https://api.42check-in.kr/tablet/reservations");
 
             HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
             if (conn != null) {

@@ -11,7 +11,9 @@ public class ConferenceRoomDTO {
     private Long reservationInfo;
     private boolean checkInState;
 
-    public ConferenceRoomDTO(Long formId, Long userId, String intraId, LocalDate date, Long reservationCount, Long reservationInfo, boolean checkInState) {
+    ConferenceRoomDTO() { }
+
+    ConferenceRoomDTO(Long formId, Long userId, String intraId, LocalDate date, Long reservationCount, Long reservationInfo, boolean checkInState) {
         this.formId = formId;
         this.userId = userId;
         this.intraId = intraId;

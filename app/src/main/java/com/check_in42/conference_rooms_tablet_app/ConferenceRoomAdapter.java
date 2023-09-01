@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ConferenceRoomAdapter extends RecyclerView.Adapter<ConferenceRoomAdapter.ViewHolder> {
 
-    List<ConferenceRoomDTO> items = new ArrayList<>();
+    private List<ConferenceRoomDTO> items = new ArrayList<>();
 
     public void addItem(ConferenceRoomDTO item) {
         items.add(item);
