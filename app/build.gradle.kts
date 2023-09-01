@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId = "com.check_in42.conference_rooms_tablet_app"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
