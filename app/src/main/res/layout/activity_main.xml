@@ -13,9 +13,10 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="13dp"
-        android:textSize="25sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         android:typeface="monospace"
+        android:textColor="@color/darkSlateGray"
         android:text="RoomName" />
 
     <LinearLayout
@@ -25,88 +26,10 @@
 
         <include layout="@layout/field_name"/>
 
-        <ScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/reservationInfoView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent" />
 
-            <LinearLayout
-                android:id="@+id/recodeLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/RecodeStyle"
-                        android:layout_weight="1"
-                        android:text="hyeonsul" />
-
-                    <TextView
-                        style="@style/RecodeStyle"
-                        android:layout_weight="5"
-                        android:text="08:00 ~ 08:30" />
-
-                    <Button style="@style/CheckInButton" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/RecodeStyle"
-                        android:layout_weight="1"
-                        android:text="hyeonsul" />
-
-                    <TextView
-                        style="@style/RecodeStyle"
-                        android:layout_weight="5"
-                        android:text="08:30 ~ 10:00" />
-
-                    <Button style="@style/CheckOutButton" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/RecodeStyle"
-                        android:layout_weight="1"
-                        android:text="hyeonsul" />
-
-                    <TextView
-                        style="@style/RecodeStyle"
-                        android:layout_weight="5"
-                        android:text="10:00 ~ 12:00" />
-
-                    <Button style="@style/CancelButton" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/RecodeStyle"
-                        android:layout_weight="1"
-                        android:text="hyeonsul" />
-
-                    <TextView
-                        style="@style/RecodeStyle"
-                        android:layout_weight="5"
-                        android:text="10:00 ~ 12:00" />
-
-                    <Button style="@style/CancelButton" />
-                </LinearLayout>
-            </LinearLayout>
-        </ScrollView>
     </LinearLayout>
 </LinearLayout>

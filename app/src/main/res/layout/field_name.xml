@@ -6,7 +6,7 @@
 
     <TextView
         style="@style/FieldNameStyle"
-        android:layout_weight="1"
+        android:layout_weight="1.5"
         android:text="Intra_id"/>
 
     <TextView
@@ -16,6 +16,6 @@
 
     <TextView
         style="@style/FieldNameStyle"
-        android:layout_weight="1"
+        android:layout_weight="1.5"
         android:text="in / out"/>
 </LinearLayout>

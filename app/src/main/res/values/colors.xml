@@ -5,4 +5,5 @@
     <color name="cancel">#DC143C</color>
     <color name="checkOut">#228B22</color>
     <color name="checkIn">#6A70FF</color>
+    <color name="darkSlateGray">#2F4F4F</color>
 </resources>
