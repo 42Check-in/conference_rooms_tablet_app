@@ -10,66 +10,41 @@ import java.time.temporal.ChronoUnit;
 
 public class ConferenceUtil {
 
-    private static String getTimeString(int[] time) {
+    private static LocalDateTime getTime(int timeIdx) {
+        return LocalDateTime.now().withHour(timeIdx / 2 + 8).withMinute(timeIdx % 2 == 1 ? 30 : 0);
+    }
+
+    private static String getTimeString(LocalDateTime time) {
         String result = "";
 
-        if (time[0] < 10)
+        if (time.getHour() < 10)
             result = "0";
-        result = result + time[0] + ":";
-        if (time[1] == 0)
+        result = result + time.getHour() + ":";
+        if (time.getMinute() == 0)
             result = result + "0";
-        result = result + time[1];
+        result = result + time.getMinute();
         return result;
     }
 
-//    public static String getTimeRange(Long reservationInfo) {
-//        final int timeBitSize = 24;
-//
-//        int timeHour = 8;
-//        int timeMin = 0;
-//        int[] startTime = new int[2];
-//        int[] endTime = new int[2];
-//        boolean flag = true;
-//
-//        for (int i = 0; i < timeBitSize; i++) {
-//            timeMin = i * 30 % 60;
-//            if (i != 0 && timeMin == 0)
-//                timeHour++;
-//            if (flag && (reservationInfo & 1L) == 1) {
-//                startTime[0] = timeHour;
-//                startTime[1] = timeMin;
-//                reservationInfo = reservationInfo >> 1;
-//                flag = false;
-//            }
-//            if (i == 23 || (!flag && (reservationInfo & 1L) == 0)) {
-//                endTime[0] = timeHour;
-//                endTime[1] = timeMin + 29;
-//                break ;
-//            }
-//            reservationInfo = reservationInfo >> 1;
-//        }
-//        return getTimeString(startTime) + " ~ " + getTimeString(endTime);
-//    }
-
     public static String getTimeRange(Long reservationInfo) {
         final int timeBitSize = 24;
-
         int[] timeIdx = new int[2];
         int range = -1;
         boolean flag = true;
 
         for (int i = 0; i < timeBitSize; i++) {
             if ((reservationInfo & 1L) == 1) {
+                range++;
                 if (flag) {
-                    timeIdx[0] = i + 1;
+                    timeIdx[0] = i;
                     flag = false;
                 }
-                range++;
             }
             reservationInfo = reservationInfo >> 1;
         }
         timeIdx[1] = timeIdx[0] + range;
-        LocalDateTime startTime = LocalDateTime.now().withHour(8 * );
+        LocalDateTime startTime = getTime(timeIdx[0]);
+        LocalDateTime endTime = getTime(timeIdx[1]).plusMinutes(29);
         return getTimeString(startTime) + " ~ " + getTimeString(endTime);
     }
 
@@ -87,5 +62,14 @@ public class ConferenceUtil {
     public static String getIp() throws UnknownHostException {
         InetAddress localhost = InetAddress.getLocalHost();
         return "IP_" + localhost.getHostAddress().replace('.', '_');
+    }
+
+    public static int getTimeIdx() {
+        LocalDateTime now = LocalDateTime.now();
+
+        Log.i("hour", now.getHour() + "");
+        if (now.getHour() < 8)
+            return 0;
+        return ((now.getHour() - 8) * 2) + (now.getMinute() >= 30 ? 1 : 0);
     }
 }

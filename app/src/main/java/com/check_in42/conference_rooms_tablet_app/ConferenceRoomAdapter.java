@@ -1,6 +1,7 @@
 package com.check_in42.conference_rooms_tablet_app;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ConferenceRoomAdapter extends RecyclerView.Adapter<ConferenceRoomAdapter.ViewHolder> {
 
@@ -50,7 +54,7 @@ public class ConferenceRoomAdapter extends RecyclerView.Adapter<ConferenceRoomAd
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(R.layout.recode_item, parent, false);
 
-        return new ViewHolder(itemView);
+        return new ViewHolder(itemView, conferenceService);
     }
 
     @Override
@@ -68,32 +72,56 @@ public class ConferenceRoomAdapter extends RecyclerView.Adapter<ConferenceRoomAd
         TextView intraIdView;
         TextView timeView;
         Button btnInOut;
+        ConferenceService conferenceService;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, ConferenceService conferenceService) {
             super(itemView);
 
             intraIdView = itemView.findViewById(R.id.intraId);
             timeView = itemView.findViewById(R.id.time);
             btnInOut = itemView.findViewById(R.id.btnInOut);
+            this.conferenceService = conferenceService;
         }
 
         public void setItem(ConferenceRoomDTO item) {
+            final int nowTimeIdx = ConferenceUtil.getTimeIdx();
+            Log.i("nowTimeIdx", nowTimeIdx + "");
+            Log.i("reservationInfo", Long.toBinaryString(item.getReservationInfo()));
             intraIdView.setText(item.getIntraId());
             timeView.setText(ConferenceUtil.getTimeRange(item.getReservationInfo()));
-
-
 
             /* check-in */
             btnInOut.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    try {
+                        if ((item.getReservationInfo() & (1L << nowTimeIdx)) > 0) {
+                            if (item.isCheckInState())
+                                conferenceService.checkOutBtn(item.getFormId());
+                            else
+                                conferenceService.checkInBtn(item.getFormId());
+                        } else {
+                            conferenceService.cancelBtn(item.getFormId());
+                        }
+                    } catch (JSONException e) {
+                        Log.i("Button Error.", Objects.requireNonNull(e.getMessage()));
+                    }
                     /* 버튼 로직 */
-                    Toast.makeText(view.getContext(), "버튼이 클릭됨: " + item.getIntraId(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(view.getContext(), "버튼이 클릭됨: " + item.getIntraId(), Toast.LENGTH_SHORT).show();
                 }
             });
-            btnInOut.setText("Check-in");
-            /* 버튼 색상 로직도 추가해야 함 */
-            btnInOut.setBackgroundColor(Color.parseColor("#6A70FF"));
+            if ((item.getReservationInfo() & (1L << nowTimeIdx)) > 0) {
+                if (item.isCheckInState()) {
+                    btnInOut.setText("Check-out");
+                    btnInOut.setBackgroundColor(Color.parseColor("#228B22"));
+                } else {
+                    btnInOut.setText("Check-in");
+                    btnInOut.setBackgroundColor(Color.parseColor("#6A70FF"));
+                }
+            } else {
+                btnInOut.setText("Cancel");
+                btnInOut.setBackgroundColor(Color.parseColor("#DC143C"));
+            }
 
             // check-in: 현재 회의실 사용 시간 이지만 checkInState가 false일 경우
             // check-out: 현재 회의실 사용 중인 경우

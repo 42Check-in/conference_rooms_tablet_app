@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         TextView title = findViewById(R.id.roomName);
         roomName = RoomName.valueOf("IP_1").getRoomName();
         title.setText(roomName);
+        Log.i("roomName", roomName);
         setRecycleView();
 
 // 실제 서비스시 주석 풀기
@@ -53,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(conferenceService.getConferenceRoomAdapter());
 
         conferenceService.viewReservationList();
-
-
 //        conferenceService.start30MinuteRefresh();
     }
 }

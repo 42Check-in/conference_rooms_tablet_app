@@ -1,8 +1,7 @@
 package com.check_in42.conference_rooms_tablet_app;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -10,18 +9,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -31,11 +26,14 @@ public class ConferenceService {
     private MainActivity activity;
     private ConferenceRoomAdapter conferenceRoomAdapter;
     private RequestQueue requestQueue;
+    private ObjectMapper mapper;
 
     public ConferenceService(MainActivity activity) {
         this.activity = activity;
         conferenceRoomAdapter = new ConferenceRoomAdapter(this);
         requestQueue = Volley.newRequestQueue(activity);
+        mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
     }
 
     public ConferenceRoomAdapter getConferenceRoomAdapter() {
@@ -51,8 +49,6 @@ public class ConferenceService {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        ObjectMapper mapper = new ObjectMapper();
-                        mapper.registerModule(new JavaTimeModule());
                         ArrayList<ConferenceRoomDTO> conferenceRoomDTOS = null;
                         try {
                             conferenceRoomDTOS = mapper.readValue(response.getString("conferenceRoomDTOList"), new TypeReference<ArrayList<ConferenceRoomDTO>>() {});
@@ -86,11 +82,42 @@ public class ConferenceService {
         }, 1, 1, TimeUnit.SECONDS);
     }
 
-    public void updateItem(Long formId) {
+    public void checkInBtn(Long formId) throws JSONException {
+        final String url = uri + "check-in";
 
+        JSONObject jsonBody = new JSONObject();
+        jsonBody.put("formId", formId);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.POST, url, jsonBody,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i("checkInSuccess", Integer.toString(200));
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (error.networkResponse != null) {
+                            Log.e("error_code: " + error.networkResponse.statusCode, error.getMessage());
+                        } else {
+                            Log.e("Error", error.getMessage());
+                        }
+                    }
+                });
+        requestQueue.add(jsonObjectRequest);
     }
 
-    public void deleteItem() {
+    public void checkOutBtn(Long formId) {
+        final String url = uri + "check-out";
 
+        Log.i("checkOutBtn", url);
+    }
+
+    public void cancelBtn(Long formId) {
+        final String url = uri + "cancel";
+
+        Log.i("cancelBtn", url);
     }
 }
