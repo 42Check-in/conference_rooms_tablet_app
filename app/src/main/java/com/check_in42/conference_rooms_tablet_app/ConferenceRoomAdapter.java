@@ -83,7 +83,7 @@ public class ConferenceRoomAdapter extends RecyclerView.Adapter<ConferenceRoomAd
 
 
 
-            /* 오늘이면 check-in */
+            /* check-in */
             btnInOut.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -94,6 +94,10 @@ public class ConferenceRoomAdapter extends RecyclerView.Adapter<ConferenceRoomAd
             btnInOut.setText("Check-in");
             /* 버튼 색상 로직도 추가해야 함 */
             btnInOut.setBackgroundColor(Color.parseColor("#6A70FF"));
+
+            // check-in: 현재 회의실 사용 시간 이지만 checkInState가 false일 경우
+            // check-out: 현재 회의실 사용 중인 경우
+            // cancel: 회의실 사용 시간이 아닌 경우
         }
     }
 }
