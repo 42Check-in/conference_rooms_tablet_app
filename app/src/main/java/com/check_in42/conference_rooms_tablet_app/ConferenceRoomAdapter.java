@@ -16,7 +16,13 @@ import java.util.List;
 
 public class ConferenceRoomAdapter extends RecyclerView.Adapter<ConferenceRoomAdapter.ViewHolder> {
 
-    private List<ConferenceRoomDTO> items = new ArrayList<>();
+    private List<ConferenceRoomDTO> items;
+    private ConferenceService conferenceService;
+
+    ConferenceRoomAdapter(ConferenceService conferenceService) {
+        items = new ArrayList<>();
+        this.conferenceService = conferenceService;
+    }
 
     public void addItem(ConferenceRoomDTO item) {
         items.add(item);
@@ -74,6 +80,9 @@ public class ConferenceRoomAdapter extends RecyclerView.Adapter<ConferenceRoomAd
         public void setItem(ConferenceRoomDTO item) {
             intraIdView.setText(item.getIntraId());
             timeView.setText(ConferenceUtil.getTimeRange(item.getReservationInfo()));
+
+
+
             /* 오늘이면 check-in */
             btnInOut.setOnClickListener(new View.OnClickListener() {
                 @Override
