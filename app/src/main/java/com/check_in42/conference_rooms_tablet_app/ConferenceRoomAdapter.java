@@ -92,7 +92,7 @@ public class ConferenceRoomAdapter extends RecyclerView.Adapter<ConferenceRoomAd
                 @Override
                 public void onClick(View view) {
                     try {
-                        if ((item.getReservationInfo() & (1L << nowTimeIdx)) > 0) {
+                        if (nowTimeIdx >= 0 && (item.getReservationInfo() & (1L << nowTimeIdx)) > 0) {
                             if (item.isCheckInState())
                                 conferenceService.checkOutBtn(item);
                             else

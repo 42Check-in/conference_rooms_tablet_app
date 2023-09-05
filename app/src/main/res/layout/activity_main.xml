@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:padding="10dp"
     android:paddingBottom="0dp"
+    android:background="#E0FFFF"
     tools:context=".MainActivity" >
 
     <TextView
@@ -17,6 +18,7 @@
         android:textSize="30sp"
         android:textStyle="bold"
         android:typeface="monospace"
+        android:fontFamily="@font/nanumsquareneoehv"
         android:textColor="@color/darkSlateGray"
         android:text="RoomName" />
 
