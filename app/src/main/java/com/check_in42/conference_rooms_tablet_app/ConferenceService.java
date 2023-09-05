@@ -140,9 +140,6 @@ public class ConferenceService {
         Log.i("checkOutBtn", url);
         JSONObject jsonBody = new JSONObject();
         jsonBody.put("formId", conferenceRoomDTO.getFormId());
-        jsonBody.put("userId", conferenceRoomDTO.getUserId());
-        jsonBody.put("date", conferenceRoomDTO.getDate());
-        jsonBody.put("reservationInfo", conferenceRoomDTO.getReservationInfo());
 
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST, url,

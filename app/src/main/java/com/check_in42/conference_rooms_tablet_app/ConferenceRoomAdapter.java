@@ -88,7 +88,6 @@ public class ConferenceRoomAdapter extends RecyclerView.Adapter<ConferenceRoomAd
             intraIdView.setText(item.getIntraId());
             timeView.setText(ConferenceUtil.getTimeRange(item.getReservationInfo()));
 
-            /* check-in */
             btnInOut.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
