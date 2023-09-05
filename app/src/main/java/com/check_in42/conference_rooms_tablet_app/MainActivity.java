@@ -54,6 +54,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(conferenceService.getConferenceRoomAdapter());
 
         conferenceService.viewReservationList();
-//        conferenceService.start30MinuteRefresh();
+        conferenceService.start30MinuteRefresh();
     }
 }

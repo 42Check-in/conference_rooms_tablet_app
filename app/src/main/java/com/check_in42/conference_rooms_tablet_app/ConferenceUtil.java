@@ -67,7 +67,6 @@ public class ConferenceUtil {
     public static int getTimeIdx() {
         LocalDateTime now = LocalDateTime.now();
 
-        Log.i("hour", now.getHour() + "");
         if (now.getHour() < 8)
             return 0;
         return ((now.getHour() - 8) * 2) + (now.getMinute() >= 30 ? 1 : 0);

@@ -3,11 +3,13 @@ package com.check_in42.conference_rooms_tablet_app;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +18,11 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -88,11 +94,12 @@ public class ConferenceService {
         JSONObject jsonBody = new JSONObject();
         jsonBody.put("formId", formId);
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.POST, url, jsonBody,
-                new Response.Listener<JSONObject>() {
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                url,
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(String response) {
                         Log.i("checkInSuccess", Integer.toString(200));
                     }
                 },
@@ -100,24 +107,125 @@ public class ConferenceService {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         if (error.networkResponse != null) {
-                            Log.e("error_code: " + error.networkResponse.statusCode, error.getMessage());
+                            Log.e("error_code: " + error.networkResponse.statusCode, Objects.requireNonNull(error.getMessage()));
                         } else {
-                            Log.e("Error", error.getMessage());
+                            Log.e("Error", Objects.requireNonNull(error.getMessage()));
                         }
                     }
-                });
-        requestQueue.add(jsonObjectRequest);
+                }
+        ) {
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return jsonBody.toString().getBytes("utf-8");
+                } catch (UnsupportedEncodingException e) {
+                    Log.e("UnsupportedEncodingException", Objects.requireNonNull(e.getMessage()));
+                    return null;
+                }
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 
-    public void checkOutBtn(Long formId) {
+    public void checkOutBtn(ConferenceRoomDTO conferenceRoomDTO) throws JSONException {
         final String url = uri + "check-out";
 
         Log.i("checkOutBtn", url);
+        JSONObject jsonBody = new JSONObject();
+        jsonBody.put("formId", conferenceRoomDTO.getFormId());
+        jsonBody.put("userId", conferenceRoomDTO.getUserId());
+        jsonBody.put("date", conferenceRoomDTO.getDate());
+        jsonBody.put("reservationInfo", conferenceRoomDTO.getReservationInfo());
+
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("checkOutSuccess", Integer.toString(200));
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (error.networkResponse != null) {
+                            Log.e("error_code: " + error.networkResponse.statusCode, Objects.requireNonNull(error.getMessage()));
+                        } else {
+                            Log.e("Error", Objects.requireNonNull(error.getMessage()));
+                        }
+                    }
+                }
+        ) {
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return jsonBody.toString().getBytes("utf-8");
+                } catch (UnsupportedEncodingException e) {
+                    Log.e("UnsupportedEncodingException", Objects.requireNonNull(e.getMessage()));
+                    return null;
+                }
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 
-    public void cancelBtn(Long formId) {
+    public void cancelBtn(Long formId) throws JSONException {
         final String url = uri + "cancel";
 
-        Log.i("cancelBtn", url);
+        Log.i("cancel", url);
+        JSONObject jsonBody = new JSONObject();
+        jsonBody.put("formId", formId);
+
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("cancelSuccess", Integer.toString(200));
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (error.networkResponse != null) {
+                            Log.e("error_code: " + error.networkResponse.statusCode, Objects.requireNonNull(error.getMessage()));
+                        } else {
+                            Log.e("Error", Objects.requireNonNull(error.getMessage()));
+                        }
+                    }
+                }
+        ) {
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return jsonBody.toString().getBytes("utf-8");
+                } catch (UnsupportedEncodingException e) {
+                    Log.e("UnsupportedEncodingException", Objects.requireNonNull(e.getMessage()));
+                    return null;
+                }
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 }

@@ -85,8 +85,6 @@ public class ConferenceRoomAdapter extends RecyclerView.Adapter<ConferenceRoomAd
 
         public void setItem(ConferenceRoomDTO item) {
             final int nowTimeIdx = ConferenceUtil.getTimeIdx();
-            Log.i("nowTimeIdx", nowTimeIdx + "");
-            Log.i("reservationInfo", Long.toBinaryString(item.getReservationInfo()));
             intraIdView.setText(item.getIntraId());
             timeView.setText(ConferenceUtil.getTimeRange(item.getReservationInfo()));
 
@@ -97,7 +95,7 @@ public class ConferenceRoomAdapter extends RecyclerView.Adapter<ConferenceRoomAd
                     try {
                         if ((item.getReservationInfo() & (1L << nowTimeIdx)) > 0) {
                             if (item.isCheckInState())
-                                conferenceService.checkOutBtn(item.getFormId());
+                                conferenceService.checkOutBtn(item);
                             else
                                 conferenceService.checkInBtn(item.getFormId());
                         } else {
@@ -106,8 +104,7 @@ public class ConferenceRoomAdapter extends RecyclerView.Adapter<ConferenceRoomAd
                     } catch (JSONException e) {
                         Log.i("Button Error.", Objects.requireNonNull(e.getMessage()));
                     }
-                    /* 버튼 로직 */
-//                    Toast.makeText(view.getContext(), "버튼이 클릭됨: " + item.getIntraId(), Toast.LENGTH_SHORT).show();
+                    conferenceService.viewReservationList();
                 }
             });
             if ((item.getReservationInfo() & (1L << nowTimeIdx)) > 0) {
