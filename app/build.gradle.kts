@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId = "com.check_in42.conference_rooms_tablet_app"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -36,4 +36,15 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310
+    // JavaTimeModule
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14.2")
+
+    // https://mvnrepository.com/artifact/com.android.volley/volley
+    implementation("com.android.volley:volley:1.2.1")
+
+
 }
