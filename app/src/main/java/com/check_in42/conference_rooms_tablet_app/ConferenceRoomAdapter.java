@@ -96,9 +96,9 @@ public class ConferenceRoomAdapter extends RecyclerView.Adapter<ConferenceRoomAd
                             if (item.isCheckInState())
                                 conferenceService.checkOutBtn(item);
                             else
-                                conferenceService.checkInBtn(item.getFormId());
+                                conferenceService.checkInBtn(item);
                         } else {
-                            conferenceService.cancelBtn(item.getFormId());
+                            conferenceService.cancelBtn(item);
                         }
                     } catch (JSONException e) {
                         Log.i("Button Error.", Objects.requireNonNull(e.getMessage()));

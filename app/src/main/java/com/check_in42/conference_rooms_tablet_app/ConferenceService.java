@@ -88,11 +88,12 @@ public class ConferenceService {
         }, 1, 1, TimeUnit.SECONDS);
     }
 
-    public void checkInBtn(Long formId) throws JSONException {
+    public void checkInBtn(ConferenceRoomDTO conferenceRoomDTO) throws JSONException {
         final String url = uri + "check-in";
 
+        Log.i("request: check-in", url);
         JSONObject jsonBody = new JSONObject();
-        jsonBody.put("formId", formId);
+        jsonBody.put("formId", conferenceRoomDTO.getFormId());
 
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
@@ -137,9 +138,10 @@ public class ConferenceService {
     public void checkOutBtn(ConferenceRoomDTO conferenceRoomDTO) throws JSONException {
         final String url = uri + "check-out";
 
-        Log.i("checkOutBtn", url);
+        Log.i("request: check-out", url);
         JSONObject jsonBody = new JSONObject();
         jsonBody.put("formId", conferenceRoomDTO.getFormId());
+        jsonBody.put("date", conferenceRoomDTO.getDate());
 
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST, url,
@@ -180,12 +182,14 @@ public class ConferenceService {
         requestQueue.add(stringRequest);
     }
 
-    public void cancelBtn(Long formId) throws JSONException {
+    public void cancelBtn(ConferenceRoomDTO conferenceRoomDTO) throws JSONException {
         final String url = uri + "cancel";
 
-        Log.i("cancel", url);
+        Log.i("request: cancel", url);
         JSONObject jsonBody = new JSONObject();
-        jsonBody.put("formId", formId);
+        jsonBody.put("formId", conferenceRoomDTO.getFormId());
+        jsonBody.put("date", conferenceRoomDTO.getDate());
+        jsonBody.put("intraId", conferenceRoomDTO.getIntraId());
 
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST, url,
