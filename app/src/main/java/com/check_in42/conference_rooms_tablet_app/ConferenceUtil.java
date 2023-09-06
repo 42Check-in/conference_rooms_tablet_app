@@ -65,7 +65,7 @@ public class ConferenceUtil {
     }
 
     public static int getTimeIdx() {
-        LocalDateTime now = LocalDateTime.now().withHour(8).withMinute(0);
+        LocalDateTime now = LocalDateTime.now();
 
         if (now.getHour() < 8)
             return -1;
