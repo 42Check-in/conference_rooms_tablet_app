@@ -141,7 +141,6 @@ public class ConferenceService {
         Log.i("request: check-out", url);
         JSONObject jsonBody = new JSONObject();
         jsonBody.put("formId", conferenceRoomDTO.getFormId());
-        jsonBody.put("date", conferenceRoomDTO.getDate());
 
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST, url,
@@ -188,8 +187,6 @@ public class ConferenceService {
         Log.i("request: cancel", url);
         JSONObject jsonBody = new JSONObject();
         jsonBody.put("formId", conferenceRoomDTO.getFormId());
-        jsonBody.put("date", conferenceRoomDTO.getDate());
-        jsonBody.put("intraId", conferenceRoomDTO.getIntraId());
 
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST, url,

@@ -89,21 +89,26 @@ public class ConferenceRoomAdapter extends RecyclerView.Adapter<ConferenceRoomAd
             timeView.setText(ConferenceUtil.getTimeRange(item.getReservationInfo()));
 
             btnInOut.setOnClickListener(new View.OnClickListener() {
+                Object lock = new Object();
                 @Override
                 public void onClick(View view) {
                     try {
-                        if (nowTimeIdx >= 0 && (item.getReservationInfo() & (1L << nowTimeIdx)) > 0) {
-                            if (item.isCheckInState())
-                                conferenceService.checkOutBtn(item);
-                            else
-                                conferenceService.checkInBtn(item);
-                        } else {
-                            conferenceService.cancelBtn(item);
+                        synchronized (lock) {
+                            if (nowTimeIdx >= 0 && (item.getReservationInfo() & (1L << nowTimeIdx)) > 0) {
+                                if (item.isCheckInState())
+                                    conferenceService.checkOutBtn(item);
+                                else
+                                    conferenceService.checkInBtn(item);
+                            } else {
+                                conferenceService.cancelBtn(item);
+                            }
+                        }
+                        synchronized (lock) {
+                            conferenceService.viewReservationList();
                         }
                     } catch (JSONException e) {
                         Log.i("Button Error.", Objects.requireNonNull(e.getMessage()));
                     }
-                    conferenceService.viewReservationList();
                 }
             });
             if ((item.getReservationInfo() & (1L << nowTimeIdx)) > 0) {
