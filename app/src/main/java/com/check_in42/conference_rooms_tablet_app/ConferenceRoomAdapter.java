@@ -122,7 +122,6 @@ public class ConferenceRoomAdapter extends RecyclerView.Adapter<ConferenceRoomAd
                 intraIdView.setTextColor(Color.parseColor("#D8D8D8"));
                 timeView.setTextColor(Color.parseColor("#D8D8D8"));
             }
-
             // check-in: 현재 회의실 사용 시간 이지만 checkInState가 false일 경우
             // check-out: 현재 회의실 사용 중인 경우
             // cancel: 회의실 사용 시간이 아닌 경우
