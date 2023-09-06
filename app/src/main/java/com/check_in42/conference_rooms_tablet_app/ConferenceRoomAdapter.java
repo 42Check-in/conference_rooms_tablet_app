@@ -107,18 +107,20 @@ public class ConferenceRoomAdapter extends RecyclerView.Adapter<ConferenceRoomAd
                 }
             });
             if ((item.getReservationInfo() & (1L << nowTimeIdx)) > 0) {
-                if (item.isCheckInState()) {
-                    btnInOut.setText("Check-out");
-                    btnInOut.setBackgroundColor(Color.parseColor("#228B22"));
-                } else {
+                if (!item.isCheckInState()) {
                     btnInOut.setText("Check-in");
                     btnInOut.setBackgroundColor(Color.parseColor("#6A70FF"));
-                    intraIdView.setTextColor(R.color.black);
-                    timeView.setTextColor(R.color.black);
+                } else {
+                    btnInOut.setText("Check-out");
+                    btnInOut.setBackgroundColor(Color.parseColor("#228B22"));
                 }
+                intraIdView.setTextColor(Color.parseColor("#2E2E2E"));
+                timeView.setTextColor(Color.parseColor("#2E2E2E"));
             } else {
                 btnInOut.setText("Cancel");
                 btnInOut.setBackgroundColor(Color.parseColor("#DC143C"));
+                intraIdView.setTextColor(Color.parseColor("#D8D8D8"));
+                timeView.setTextColor(Color.parseColor("#D8D8D8"));
             }
 
             // check-in: 현재 회의실 사용 시간 이지만 checkInState가 false일 경우
