@@ -113,6 +113,8 @@ public class ConferenceRoomAdapter extends RecyclerView.Adapter<ConferenceRoomAd
                 } else {
                     btnInOut.setText("Check-in");
                     btnInOut.setBackgroundColor(Color.parseColor("#6A70FF"));
+                    intraIdView.setTextColor(R.color.black);
+                    timeView.setTextColor(R.color.black);
                 }
             } else {
                 btnInOut.setText("Cancel");
