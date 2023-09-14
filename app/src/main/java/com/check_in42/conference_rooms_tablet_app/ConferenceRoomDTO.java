@@ -1,6 +1,7 @@
 package com.check_in42.conference_rooms_tablet_app;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class ConferenceRoomDTO {
     private Long formId;
@@ -9,18 +10,18 @@ public class ConferenceRoomDTO {
     private LocalDate date;
     private Long reservationCount;
     private Long reservationInfo;
-    private boolean checkInState;
+    private LocalDateTime checkInTime;
 
     ConferenceRoomDTO() { }
 
-    ConferenceRoomDTO(Long formId, Long userId, String intraId, LocalDate date, Long reservationCount, Long reservationInfo, boolean checkInState) {
+    ConferenceRoomDTO(Long formId, Long userId, String intraId, LocalDate date, Long reservationCount, Long reservationInfo, LocalDateTime checkInTime) {
         this.formId = formId;
         this.userId = userId;
         this.intraId = intraId;
         this.date = date;
         this.reservationCount = reservationCount;
         this.reservationInfo = reservationInfo;
-        this.checkInState = checkInState;
+        this.checkInTime = checkInTime;
     }
 
     public Long getFormId() {
@@ -71,11 +72,11 @@ public class ConferenceRoomDTO {
         this.reservationInfo = reservationInfo;
     }
 
-    public boolean isCheckInState() {
-        return checkInState;
+    public LocalDateTime getCheckInTime() {
+        return checkInTime;
     }
 
-    public void setCheckInState(boolean checkInState) {
-        this.checkInState = checkInState;
+    public void setCheckInTime(LocalDateTime checkInTime) {
+        this.checkInTime = checkInTime;
     }
 }

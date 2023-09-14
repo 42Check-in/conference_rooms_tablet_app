@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONException;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -94,10 +95,10 @@ public class ConferenceRoomAdapter extends RecyclerView.Adapter<ConferenceRoomAd
                 public void onClick(View view) {
                     try {
                         if (nowTimeIdx >= 0 && (item.getReservationInfo() & (1L << nowTimeIdx)) > 0) {
-                            if (item.isCheckInState())
-                                conferenceService.checkOutBtn(item);
-                            else
+                            if (item.getCheckInTime() == null)
                                 conferenceService.checkInBtn(item);
+                            else
+                                conferenceService.checkOutBtn(item);
                         } else {
                             conferenceService.cancelBtn(item);
                         }
@@ -107,7 +108,7 @@ public class ConferenceRoomAdapter extends RecyclerView.Adapter<ConferenceRoomAd
                 }
             });
             if ((item.getReservationInfo() & (1L << nowTimeIdx)) > 0) {
-                if (!item.isCheckInState()) {
+                if (item.getCheckInTime() == null) {
                     btnInOut.setText("Check-in");
                     btnInOut.setBackgroundColor(Color.parseColor("#6A70FF"));
                 } else {

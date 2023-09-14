@@ -64,11 +64,13 @@ public class ConferenceUtil {
         return "IP_" + localhost.getHostAddress().replace('.', '_');
     }
 
-    public static int getTimeIdx() {
-        LocalDateTime now = LocalDateTime.now();
-
-        if (now.getHour() < 8)
+    public static int getTimeIdx(LocalDateTime dateTime) {
+        if (dateTime.getHour() < 8)
             return -1;
-        return ((now.getHour() - 8) * 2) + (now.getMinute() >= 30 ? 1 : 0);
+        return ((dateTime.getHour() - 8) * 2) + (dateTime.getMinute() >= 30 ? 1 : 0);
+    }
+
+    public static int getTimeIdx() {
+        return getTimeIdx(LocalDateTime.now());
     }
 }
