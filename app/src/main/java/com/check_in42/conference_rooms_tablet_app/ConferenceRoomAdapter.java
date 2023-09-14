@@ -93,18 +93,13 @@ public class ConferenceRoomAdapter extends RecyclerView.Adapter<ConferenceRoomAd
                 @Override
                 public void onClick(View view) {
                     try {
-                        synchronized (lock) {
-                            if (nowTimeIdx >= 0 && (item.getReservationInfo() & (1L << nowTimeIdx)) > 0) {
-                                if (item.isCheckInState())
-                                    conferenceService.checkOutBtn(item);
-                                else
-                                    conferenceService.checkInBtn(item);
-                            } else {
-                                conferenceService.cancelBtn(item);
-                            }
-                        }
-                        synchronized (lock) {
-                            conferenceService.viewReservationList();
+                        if (nowTimeIdx >= 0 && (item.getReservationInfo() & (1L << nowTimeIdx)) > 0) {
+                            if (item.isCheckInState())
+                                conferenceService.checkOutBtn(item);
+                            else
+                                conferenceService.checkInBtn(item);
+                        } else {
+                            conferenceService.cancelBtn(item);
                         }
                     } catch (JSONException e) {
                         Log.i("Button Error.", Objects.requireNonNull(e.getMessage()));
